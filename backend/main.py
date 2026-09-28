@@ -1,4 +1,3 @@
-from fastapi.responses import FileResponse
 from pathlib import Path
 import json
 
@@ -10,7 +9,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from backend.auth import create_access_token, hash_password, verify_password
-from backend.database import get_db
+from backend.database import get_db, Base, engine
 from backend.models import User, Case, Document, DocumentVersion, AuditLog
 from backend.dependencies import get_current_user
 from backend.document_service import calculate_sha256, save_uploaded_file
@@ -18,7 +17,8 @@ from backend.scanner import scan_document
 
 from backend.comparison import compare_versions
 
-from backend.audit_service import create_audit_log 
+from backend.audit_service import create_audit_log
+from backend.seed import seed_demo_data
 
 security = HTTPBearer()
 
@@ -28,6 +28,11 @@ app = FastAPI(
     description="Secure Digital Document Management System",
     version="1.0.0"
 )
+
+# Initialize the SQLite database and prototype demo data on startup.
+# Render starts with a fresh filesystem, so this is required for the prototype.
+Base.metadata.create_all(bind=engine)
+seed_demo_data()
 
 FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
 
