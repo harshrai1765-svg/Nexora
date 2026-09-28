@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Nexora | Secure Legal Documents</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- LOGIN SCREEN -->
+
+    <div id="loginScreen" class="login-screen">
+      <div class="login-card">
+        <div class="login-logo">N</div>
+
+        <h1>NEXORA</h1>
+
+        <p class="login-tagline">SECURE LEGAL DOCUMENT MANAGEMENT</p>
+
+        <div class="login-divider"></div>
+
+        <label> Username </label>
+
+        <input
+          type="text"
+          id="username"
+          placeholder="Enter username"
+          value="Harsh"
+        />
+
+        <label> Password </label>
+
+        <input type="password" id="password" placeholder="Enter password" />
+
+        <button class="login-btn" onclick="performLogin()">SIGN IN</button>
+
+        <p id="loginError" class="login-error"></p>
+
+        <div class="login-security">
+          <span class="status-dot"></span>
+
+          Secure authentication enabled
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+
+    <div id="dashboard" class="app" style="display: none">
+      <!-- Sidebar -->
+
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">N</div>
+
+          <div>
+            <h1>NEXORA</h1>
+
+            <span> SECURE DOCUMENTS </span>
+          </div>
+        </div>
+
+        <nav>
+          <button class="nav-item active">
+            <span>⌂</span>
+
+            Dashboard
+          </button>
+
+          <button class="nav-item">
+            <span>▣</span>
+
+            Cases
+          </button>
+
+          <button class="nav-item">
+            <span>◫</span>
+
+            Documents
+          </button>
+
+          <button class="nav-item">
+            <span>◉</span>
+
+            Integrity
+          </button>
+
+          <button class="nav-item">
+            <span>☷</span>
+
+            Audit Trail
+          </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="security-status">
+            <span class="status-dot"></span>
+
+            System Secure
+          </div>
+
+          <div class="user-card">
+            <div class="avatar">H</div>
+
+            <div>
+              <strong id="loggedUser"> Harsh </strong>
+
+              <small> Administrator </small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">SECURE LEGAL REPOSITORY</p>
+
+            <h2>Investigation Dashboard</h2>
+          </div>
+
+          <div class="top-actions">
+            <span class="connection">
+              <span class="status-dot"></span>
+
+              Backend Connected
+            </span>
+
+            <button class="profile-btn">H</button>
+          </div>
+        </header>
+
+        <!-- STATISTICS -->
+
+        <section class="stats">
+          <div class="stat-card">
+            <div class="stat-icon">▣</div>
+
+            <div>
+              <span> Total Cases </span>
+
+              <strong id="totalCases">01</strong>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">◫</div>
+
+            <div>
+              <span> Documents </span>
+
+              <strong id="totalDocuments">01</strong>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">✓</div>
+
+            <div>
+              <span> Integrity Checks </span>
+
+              <strong id="integrityChecks">01</strong>
+            </div>
+          </div>
+
+          <div class="stat-card alert-card">
+            <div class="stat-icon">!</div>
+
+            <div>
+              <span> Alerts </span>
+
+              <strong id="alerts">01</strong>
+            </div>
+          </div>
+        </section>
+
+        <!-- CASE -->
+
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">ACTIVE INVESTIGATION</p>
+
+              <h3>Sample Investigation Case</h3>
+            </div>
+
+            <span class="case-status"> UNDER INVESTIGATION </span>
+          </div>
+
+          <div class="case-card">
+            <div class="case-info">
+              <div class="info-row">
+                <span> Case Number </span>
+
+                <strong> NXR-2026-001 </strong>
+              </div>
+
+              <div class="info-row">
+                <span> Case Type </span>
+
+                <strong> Digital Investigation </strong>
+              </div>
+
+              <div class="info-row">
+                <span> Documents </span>
+
+                <strong> 1 document · 2 versions </strong>
+              </div>
+
+              <div class="info-row">
+                <span> Last Integrity Check </span>
+
+                <strong> 28 September 2026 </strong>
+              </div>
+            </div>
+
+            <div class="integrity-panel">
+              <div class="warning-icon">!</div>
+
+              <div>
+                <span class="panel-label"> DOCUMENT INTEGRITY </span>
+
+                <h4>Modification Detected</h4>
+
+                <p>Version 2 differs from the original document fingerprint.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- DOCUMENT -->
+
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">SECURE REPOSITORY</p>
+
+              <h3>Recent Document</h3>
+            </div>
+
+            <button class="primary-btn">+ Upload Document</button>
+          </div>
+
+          <div class="document-card">
+            <div class="document-icon">PDF</div>
+
+            <div class="document-main">
+              <strong> Nexora_Sample_FIR_NXR-2026-001.pdf </strong>
+
+              <span> First Information Report · Version 2 </span>
+            </div>
+
+            <div class="document-hash">
+              <span> SHA-256 </span>
+
+              <code> 9f7c0a42...3e49bc44 </code>
+            </div>
+
+            <div class="modified-badge">MODIFIED</div>
+
+            <button class="view-btn">View Report →</button>
+          </div>
+        </section>
+
+        <!-- ACTIVITY -->
+
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">CHAIN OF CUSTODY</p>
+
+              <h3>Recent Activity</h3>
+            </div>
+          </div>
+
+          <div class="activity-card">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+
+              <div>
+                <strong> Integrity Check Completed </strong>
+
+                <p>Version 1 compared with Version 2. Modification detected.</p>
+
+                <span> Harsh · 28 Sep 2026 · 18:32 </span>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+
+              <div>
+                <strong> Document Version Created </strong>
+
+                <p>New document fingerprint generated.</p>
+
+                <span> Harsh · Version 2 </span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
