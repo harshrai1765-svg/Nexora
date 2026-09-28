@@ -104,7 +104,7 @@ async function apiRequest(url, options = {}) {
 
   headers["Authorization"] = `Bearer ${token}`;
 
-  const response = await fetch(`${API}${url}`, {
+  const response = await fetch(`${API}/login`, {
     ...options,
     headers: headers,
   });

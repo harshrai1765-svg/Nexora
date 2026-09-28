@@ -1,3 +1,4 @@
+from fastapi.responses import FileResponse
 from pathlib import Path
 import json
 
@@ -27,6 +28,18 @@ app = FastAPI(
     description="Secure Digital Document Management System",
     version="1.0.0"
 )
+
+FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
+
+
+@app.get("/style.css")
+def style_css():
+    return FileResponse(FRONTEND_DIR / "style.css")
+
+
+@app.get("/app.js")
+def app_js():
+    return FileResponse(FRONTEND_DIR / "app.js")
 
 app.add_middleware(
     CORSMiddleware,
