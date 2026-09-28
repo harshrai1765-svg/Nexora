@@ -51,7 +51,10 @@ async function performLogin() {
     error.textContent = err.message || "Unable to connect to Nexora.";
   }
 }
-const API = "http://127.0.0.1:8000";
+const API =
+  window.location.protocol === "file:"
+    ? "http://127.0.0.1:8000"
+    : window.location.origin;
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Nexora frontend ready.");

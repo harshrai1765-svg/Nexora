@@ -2,6 +2,7 @@ from pathlib import Path
 import json
 
 from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware 
 from fastapi.security import HTTPBearer
 from pydantic import BaseModel
@@ -54,10 +55,9 @@ class CaseCreateRequest(BaseModel):
 
 @app.get("/")
 def root():
-    return {
-        "message": "Nexora API is running",
-        "status": "online"
-    }
+    return FileResponse(
+        Path(__file__).resolve().parent.parent / "frontend" / "index.html"
+    )
 
 
 @app.post("/register")
