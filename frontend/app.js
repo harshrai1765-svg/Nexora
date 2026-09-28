@@ -1,10 +1,6 @@
-let token = null;
-
 async function performLogin() {
   const username = document.getElementById("username").value.trim();
-
   const password = document.getElementById("password").value;
-
   const error = document.getElementById("loginError");
 
   error.textContent = "";
@@ -28,7 +24,15 @@ async function performLogin() {
       }),
     });
 
-    const data = await response.json();
+    const text = await response.text();
+
+    let data;
+
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error(text || "Server returned an invalid response.");
+    }
 
     if (!response.ok) {
       throw new Error(data.detail || "Login failed");
@@ -37,7 +41,6 @@ async function performLogin() {
     token = data.access_token;
 
     document.getElementById("loginScreen").style.display = "none";
-
     document.getElementById("dashboard").style.display = "flex";
 
     document.getElementById("loggedUser").textContent = data.username;
@@ -51,6 +54,9 @@ async function performLogin() {
     error.textContent = err.message || "Unable to connect to Nexora.";
   }
 }
+
+let token = null;
+
 const API =
   window.location.protocol === "file:"
     ? "http://127.0.0.1:8000"
@@ -84,13 +90,18 @@ async function login(username, password) {
     }),
   });
 
-  const data = await response.json();
+  const text = await response.text();
+  let data;
+
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error(text || "Server returned an invalid response.");
+  }
 
   if (!response.ok) {
     throw new Error(data.detail || "Login failed");
   }
-
-  token = data.access_token;
 
   return data;
 }
@@ -100,16 +111,26 @@ async function login(username, password) {
 ========================= */
 
 async function apiRequest(url, options = {}) {
-  const headers = options.headers || {};
+  const headers = new Headers(options.headers || {});
 
-  headers["Authorization"] = `Bearer ${token}`;
+  if (token) {
+    headers.set("Authorization", `Bearer ${token}`);
+  }
 
-  const response = await fetch(`${API}/login`, {
+  const response = await fetch(`${API}${url}`, {
     ...options,
     headers: headers,
   });
 
-  const data = await response.json();
+  const text = await response.text();
+
+  let data;
+
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    throw new Error(text || "Server returned an invalid response.");
+  }
 
   if (!response.ok) {
     throw new Error(data.detail || "Request failed");
@@ -117,31 +138,6 @@ async function apiRequest(url, options = {}) {
 
   return data;
 }
-
-async function loadDashboardStats() {
-  try {
-    const stats = await apiRequest("/dashboard/stats");
-
-    document.getElementById("totalCases").textContent = String(
-      stats.total_cases,
-    ).padStart(2, "0");
-
-    document.getElementById("totalDocuments").textContent = String(
-      stats.total_documents,
-    ).padStart(2, "0");
-
-    document.getElementById("integrityChecks").textContent = String(
-      stats.integrity_checks,
-    ).padStart(2, "0");
-
-    document.getElementById("alerts").textContent = String(
-      stats.alerts,
-    ).padStart(2, "0");
-  } catch (error) {
-    console.error("Dashboard stats failed:", error);
-  }
-}
-
 /* =========================
    LOAD CASE DATA
 ========================= */
